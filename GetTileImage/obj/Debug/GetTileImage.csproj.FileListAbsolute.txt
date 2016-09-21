@@ -1,0 +1,9 @@
+E:\开发工具\GetTileImage\GetTileImage\GetTileImage\bin\Debug\GetTileImage.exe.config
+E:\开发工具\GetTileImage\GetTileImage\GetTileImage\bin\Debug\GetTileImage.exe
+E:\开发工具\GetTileImage\GetTileImage\GetTileImage\bin\Debug\GetTileImage.pdb
+E:\开发工具\GetTileImage\GetTileImage\GetTileImage\obj\Debug\GetTileImage.FrmMain.resources
+E:\开发工具\GetTileImage\GetTileImage\GetTileImage\obj\Debug\GetTileImage.Properties.Resources.resources
+E:\开发工具\GetTileImage\GetTileImage\GetTileImage\obj\Debug\GetTileImage.csproj.GenerateResource.Cache
+E:\开发工具\GetTileImage\GetTileImage\GetTileImage\obj\Debug\GetTileImage.exe
+E:\开发工具\GetTileImage\GetTileImage\GetTileImage\obj\Debug\GetTileImage.pdb
+E:\开发工具\GetTileImage\GetTileImage\GetTileImage\obj\Debug\GetTileImage.csprojResolveAssemblyReference.cache

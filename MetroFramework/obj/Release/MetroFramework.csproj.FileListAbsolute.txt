@@ -1,0 +1,5 @@
+E:\开发工具\NPGISMapTileDown\GetTileImage\MetroFramework\obj\Release\MetroFramework.Forms.MetroForm.resources
+E:\开发工具\NPGISMapTileDown\GetTileImage\MetroFramework\obj\Release\MetroFramework.Forms.MetroMessageBox.resources
+E:\开发工具\NPGISMapTileDown\GetTileImage\MetroFramework\obj\Release\MetroFramework.MetroMessageBoxControl.resources
+E:\开发工具\NPGISMapTileDown\GetTileImage\MetroFramework\obj\Release\MetroFramework.Properties.Resources.resources
+E:\开发工具\NPGISMapTileDown\GetTileImage\MetroFramework\obj\Release\MetroFramework.csproj.GenerateResource.Cache

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>OpenLayers Tiled Map Service Example</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script src="OpenLayers.js"></script>
+	<script src="libprj/proj4js.js"></script>
+    <script src="libprj/defs/EPSG900913.js"></script>
+    <script defer="defer" type="text/javascript">
+        var lon = 0;
+        var lat = 0;
+        var zoom = 0;
+        var map_google,map_local, s_Layer,m_Layer,h_Layer;
+
+function QueryString()
+{
+	var name,value,i;
+	var str=location.href;
+	var num=str.indexOf("?")
+	str=str.substr(num+1);
+	var arrtmp=str.split("&");
+	for(i=0;i < arrtmp.length;i++)
+	{
+		num=arrtmp[i].indexOf("=");
+		if(num>0)
+		{
+			name=arrtmp[i].substring(0,num);
+			value=arrtmp[i].substr(num+1);
+			this[name]=value;
+		}
+	}
+}
+
+var Request=new QueryString();
+var tileDir = decodeURI(Request["tile"]);
+		
+function google_wgs84(latlon)
+{
+    var projSource = new Proj4js.Proj("EPSG:900913");//projHash['WGS84'];
+    var projDest = new Proj4js.Proj("WGS84");//projHash['EPSG:900913'];
+	var pointInput = latlon.lon.toString() + "," + latlon.lat.toString();
+	var pointSource = new Proj4js.Point(pointInput);
+	var pointDest = Proj4js.transform(projSource,projDest, pointSource);
+	var arr = (pointDest.toShortString()).split(",");
+	var wgs84Point = new OpenLayers.LonLat(arr[0], arr[1]);
+	return wgs84Point;
+}
+		
+		
+		function init(){
+		pW = document.documentElement.clientWidth;
+	    pH = document.documentElement.clientHeight;
+		document.getElementById("map_google").style.width = parseInt(pW/2-10).toString() + "px";
+		document.getElementById("map_google").style.height = parseInt(pH-30).toString() + "px";
+		document.getElementById("map_local").style.width = parseInt(pW/2-10).toString() + "px";
+		document.getElementById("map_local").style.height = parseInt(pH-30).toString() + "px";
+		init_google();
+		init_local();
+		}
+
+        function init_google(){
+            map_google = new OpenLayers.Map( 'map_google',{controls: [
+	    //new OpenLayers.Control.LayerSwitcher(),
+	    new OpenLayers.Control.Attribution(),
+	    new OpenLayers.Control.PanZoomBar(),
+	    //new OpenLayers.Control.MouseToolbar()
+		new OpenLayers.Control.Navigation()
+	]} );
+	     
+		 var scaleline = new OpenLayers.Control.ScaleLine();
+	     map_google.addControl(scaleline);
+	    //http://mt3.google.cn/vt/lyrs=s@125&hl=zh-CN&gl=CN&src=app&x=1685&y=775&z=11&s=Galile
+		//http://mt2.google.cn/vt/imgtp=png32&lyrs=h@207585805&hl=zh-CN&gl=CN&src=app&x=13492&y=6203&z=14&s=Galileo
+//http://mt1.google.cn/vt/lyrs=t@127,r@160000000&hl=zh-CN&gl=CN&src=api&x=7&y=5&z=4&s=Ga
+        s_Layer_google = new OpenLayers.Layer.OSM("google卫星", "http://mt3.google.cn/vt/lyrs=s@125&hl=zh-CN&gl=CN&src=app&x=${x}&y=${y}&z=${z}&s=Gali", {numZoomLevels: 20, alpha: true, isBaseLayer: true});
+		m_Layer_google = new OpenLayers.Layer.OSM("google地图", "http://mt3.google.cn/vt/lyrs=m@177000000&hl=zh-CN&gl=cn&src=app&x=${x}&y=${y}&z=${z}&s=Gali", {numZoomLevels: 20, alpha: true, isBaseLayer: true,visibility: false});
+		t_Layer_google = new OpenLayers.Layer.OSM("Google地形", "http://mt1.google.cn/vt/lyrs=t@127,r@160000000&hl=zh-CN&gl=CN&src=api&x=${x}&y=${y}&z=${z}&s=Galileo", {numZoomLevels: 20, alpha: true, isBaseLayer: true});
+		h_Layer_google = new OpenLayers.Layer.OSM("Google地名", "http://mt2.google.cn/vt/imgtp=png32&lyrs=h@207585805&hl=zh-CN&gl=CN&src=app&x=${x}&y=${y}&z=${z}&s=Galileo", {numZoomLevels: 20, alpha: false, isBaseLayer: false,visibility: false});
+         map_google.addLayer(s_Layer_google);
+		 map_google.addLayer(m_Layer_google);
+		 map_google.addLayer(t_Layer_google);
+		 map_google.addLayer(h_Layer_google);
+		 map_google.setBaseLayer(s_Layer);
+         map_google.addControl(new OpenLayers.Control.LayerSwitcher());
+         map_google.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+		 
+		 map_google.events.register("move", map_google, function(e) { 
+                //var position = this.events.getMousePosition(e);
+				map_local.setCenter(map_google.getCenter(),map_google.getZoom());
+				});
+		 map_google.events.register("mousemove", map_google, function(e) { 
+                var lonlat = map_google.getLonLatFromViewPortPx(e.xy);
+				show_xy(lonlat);
+				});
+        }
+		
+		function show_xy(lonlat)
+		{
+			lonlat = google_wgs84(lonlat);
+			var x0 = lonlat.lon;//经度
+			var y0 = lonlat.lat;//纬度
+			document.getElementById("div_xy").innerHTML = "级别:" + map_google.getZoom().toString() + " &nbsp;&nbsp;经纬度:(" + x0.toString() + "," + y0.toString() + ")";
+		}
+		
+		function init_local()
+		{
+            map_local = new OpenLayers.Map( 'map_local',{controls: [
+	    //new OpenLayers.Control.LayerSwitcher(),
+	    new OpenLayers.Control.Attribution(),
+	    new OpenLayers.Control.PanZoomBar(),
+	    //new OpenLayers.Control.MouseToolbar()
+		new OpenLayers.Control.Navigation()
+	]} );
+	     
+		 var scaleline = new OpenLayers.Control.ScaleLine();
+	     map_local.addControl(scaleline);
+	    //http://mt3.google.cn/vt/lyrs=s@125&hl=zh-CN&gl=CN&src=app&x=1685&y=775&z=11&s=Galile
+		
+		s_Layer_local = new OpenLayers.Layer.OSM("本地卫星", tileDir + "/s/${z}/${x}/${y}.jpg", {numZoomLevels: 20, alpha: true, isBaseLayer: true});
+		m_Layer_local = new OpenLayers.Layer.OSM("本地地图", tileDir + "/m/${z}/${x}/${y}.png", {numZoomLevels: 20, alpha: true, isBaseLayer: true});
+		t_Layer_local = new OpenLayers.Layer.OSM("本地地形", tileDir + "/t/${z}/${x}/${y}.jpg", {numZoomLevels: 20, alpha: true, isBaseLayer: true});
+		h_Layer_local = new OpenLayers.Layer.OSM("本地地名", tileDir + "/h/${z}/${x}/${y}.png", {numZoomLevels: 20, alpha: true, isBaseLayer: false, visibility: false});
+		 map_local.addLayer(s_Layer_local);
+		 map_local.addLayer(m_Layer_local);
+		 map_local.addLayer(t_Layer_local);
+		 map_local.addLayer(h_Layer_local);
+		 map_local.setBaseLayer(s_Layer);
+         map_local.addControl(new OpenLayers.Control.LayerSwitcher());
+         map_local.setCenter(new OpenLayers.LonLat(lon, lat), zoom);
+		 map_local.events.register("move", map_local, function(e) { 
+				map_google.setCenter(map_local.getCenter(),map_local.getZoom());
+				});
+		 map_local.events.register("mousemove", map_local, function(e) { 
+				var lonlat = map_local.getLonLatFromViewPortPx(e.xy);
+				show_xy(lonlat);
+				});
+		 
+        }
+		
+
+function setting_src(obj)
+{
+	pW = document.documentElement.clientWidth;
+	pH = document.documentElement.clientHeight;
+	if(obj.value == 'google')
+	{
+	    document.getElementById("map_local").style.width = "0px";
+		document.getElementById("map_local").style.height = "0px";
+		document.getElementById("map_google").style.width = (pW-10).toString() + "px";
+		document.getElementById("map_google").style.height = (pH-50).toString() + "px";
+	}
+	else if(obj.value == 'local')
+	{
+	    document.getElementById("map_google").style.width = "0px";
+		document.getElementById("map_google").style.height = "0px";
+		document.getElementById("map_local").style.width = (pW-10).toString() + "px";
+		document.getElementById("map_local").style.height = (pH-50).toString() + "px";
+	}
+	else if (obj.value == 'google_local')
+	{
+		document.getElementById("map_google").style.width = parseInt(pW/2-10).toString() + "px";
+		document.getElementById("map_google").style.height = parseInt(pH-50).toString() + "px";
+		document.getElementById("map_local").style.width = parseInt(pW/2-10).toString() + "px";
+		document.getElementById("map_local").style.height = parseInt(pH-50).toString() + "px";
+	}
+}
+
+
+
+
+    </script>
+    <style type="text/css">
+<!--
+.STYLE2 {font-size: 13px}
+body {
+	margin-top: 0px;
+}
+-->
+    </style>
+</head>
+  <body onLoad="init()" oncontextmenu=self.event.returnValue=false onselectstart="return false">
+  <span class="STYLE2"><strong>数据源设置：</strong>
+  <INPUT TYPE=RADIO NAME="rd_src" id="rdn_src_google" VALUE="google" onClick="setting_src(this)" >
+  Google网络数据
+  <INPUT TYPE=RADIO NAME="rd_src" id="rdn_src_google" VALUE="local" onClick="setting_src(this)" >
+  本地瓦片库
+  <INPUT TYPE=RADIO NAME="rd_src" id="rdn_src_google" VALUE="google_local" onClick="setting_src(this)" checked="checked">
+  对照显示（左：Google网络数据 右：本地瓦片库）</span>
+  
+  <span  class="STYLE2" style="color:#0000FF; font-size:13px;" id="div_xy"></span>
+  
+  
+  
+    <table border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <th scope="row"><div id="map_google" style=" width:100px; height:100px;" class="smallmap"></div></th>
+        <td><div id="map_local" style="width:100px; height:100px;" class="smallmap"></div></td>
+      </tr>
+    </table>
+  
+
+</body>
+</html>

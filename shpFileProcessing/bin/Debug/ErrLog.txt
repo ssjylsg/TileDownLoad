@@ -1,0 +1,2 @@
+异常：<update menpaihao set quanpin='SHE'MISS',szm='SHE'MISS' where gid=427765>语法错误
+---------------------------------------------------------

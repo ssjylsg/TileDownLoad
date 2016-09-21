@@ -1,0 +1,45 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=7" />-->
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+</head>
+
+<body>
+    <div class="map-id" id="mapId"></div>
+    <script type="text/javascript" src="Init.js"></script>
+    <script type="text/javascript">
+    var mapContainer = document.getElementById("mapId");
+    var map = new NPMapLib.Map(mapContainer, {
+        minZoom: $minZoom$,
+        maxZoom: $maxZoom$,
+        restrictedExtent:[$minX$, $minY$, $maxX$, $maxY$],
+        projection : "EPSG:4326"
+
+    });
+    //
+    //图层参数
+    var optsBase = {
+        mapType: '',
+        type: '$type$',
+        centerPoint: [$centerX$,$centerY$],
+        fullExtent: [-180, -90, 180, 90],
+        topLevel: 0,
+        bottomLevel: 18,
+        isBaseLayer: true,
+        isLocalMap: true,
+        zoomOffset: 0
+    };
+    var layerSLYX = new NPMapLib.Layers.TDMapLayer("Vector/", "ditu", optsBase);
+    map.addLayers([layerSLYX]);
+
+    map.addControl(new NPMapLib.Controls.NavigationControl());
+    map.addControl(new NPMapLib.Controls.OverviewControl());
+    map.addControl(new NPMapLib.Controls.ScaleControl());
+    </script>
+</body>
+</html>
+

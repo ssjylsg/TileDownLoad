@@ -1,0 +1,1012 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D05C647C-DA91-4049-8813-9826EE435179}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NPMapTiles</RootNamespace>
+    <AssemblyName>NPMapTiles</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <PublishUrl>发布\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\output\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>mofang.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>NPMapTiles.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\usedll\ChnCharInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="DevComponents.DotNetBar2">
+      <HintPath>..\usedll\DevComponents.DotNetBar2.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net35-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\packages\Npgsql.2.2.7\lib\net35\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="ogr_csharp">
+      <HintPath>..\usedll\ogr_csharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AusterityConfig.cs" />
+    <Compile Include="CustomExceptionHandler.cs" />
+    <Compile Include="EzMapTileDownLoadFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EzMapTileDownLoadFrm.Designer.cs">
+      <DependentUpon>EzMapTileDownLoadFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileTools\HtmlTool.cs" />
+    <Compile Include="FrmAllData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAllData.Designer.cs">
+      <DependentUpon>FrmAllData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmBussiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBussiness.Designer.cs">
+      <DependentUpon>FrmBussiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCaption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCaption.Designer.cs">
+      <DependentUpon>FrmCaption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmChnCharInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmChnCharInfo.designer.cs">
+      <DependentUpon>FrmChnCharInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmLinence.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmLinence.Designer.cs">
+      <DependentUpon>FrmLinence.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmBaiduRectify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBaiduRectify.Designer.cs">
+      <DependentUpon>FrmBaiduRectify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDownAdminDivision.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDownAdminDivision.Designer.cs">
+      <DependentUpon>FrmDownAdminDivision.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDownRoadCross.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDownRoadCross.Designer.cs">
+      <DependentUpon>FrmDownRoadCross.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDownRoadLine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDownRoadLine.Designer.cs">
+      <DependentUpon>FrmDownRoadLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmExcel2Shp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmExcel2Shp.Designer.cs">
+      <DependentUpon>FrmExcel2Shp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGetpointByAddress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGetpointByAddress.Designer.cs">
+      <DependentUpon>FrmGetpointByAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGetAddressByPoint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGetAddressByPoint.Designer.cs">
+      <DependentUpon>FrmGetAddressByPoint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmNewThing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmNewThing.Designer.cs">
+      <DependentUpon>FrmNewThing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPoiDistrict.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPoiDistrict.Designer.cs">
+      <DependentUpon>FrmPoiDistrict.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPOIDown.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPOIDown.Designer.cs">
+      <DependentUpon>FrmPOIDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmProperty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProperty.Designer.cs">
+      <DependentUpon>FrmProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRoadLineOpr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRoadLineOpr.Designer.cs">
+      <DependentUpon>FrmRoadLineOpr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRoadNameUpdata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRoadNameUpdata.Designer.cs">
+      <DependentUpon>FrmRoadNameUpdata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTileCoverter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTileCoverter.Designer.cs">
+      <DependentUpon>FrmTileCoverter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Hz2Py.cs" />
+    <Compile Include="ImageTools\ImageTool.cs" />
+    <Compile Include="ImageTools\MapTool.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools.cs" />
+    <Compile Include="FrmGoogleRectify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGoogleRectify.Designer.cs">
+      <DependentUpon>FrmGoogleRectify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCoverteRectify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCoverteRectify.Designer.cs">
+      <DependentUpon>FrmCoverteRectify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmShp2Excel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmShp2Excel.Designer.cs">
+      <DependentUpon>FrmShp2Excel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRegion2Line.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRegion2Line.Designer.cs">
+      <DependentUpon>FrmRegion2Line.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPOIDownForBaidu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPOIDownForBaidu.Designer.cs">
+      <DependentUpon>FrmPOIDownForBaidu.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="EzMapTileDownLoadFrm.resx">
+      <DependentUpon>EzMapTileDownLoadFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAllData.resx">
+      <DependentUpon>FrmAllData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmBaiduRectify.resx">
+      <DependentUpon>FrmBaiduRectify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmBussiness.resx">
+      <DependentUpon>FrmBussiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCaption.resx">
+      <DependentUpon>FrmCaption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmChnCharInfo.resx">
+      <DependentUpon>FrmChnCharInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDownAdminDivision.resx">
+      <DependentUpon>FrmDownAdminDivision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDownRoadCross.resx">
+      <DependentUpon>FrmDownRoadCross.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDownRoadLine.resx">
+      <DependentUpon>FrmDownRoadLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmExcel2Shp.resx">
+      <DependentUpon>FrmExcel2Shp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGetpointByAddress.resx">
+      <DependentUpon>FrmGetpointByAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmGetAddressByPoint.resx">
+      <DependentUpon>FrmGetAddressByPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmLinence.resx">
+      <DependentUpon>FrmLinence.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmNewThing.resx">
+      <DependentUpon>FrmNewThing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPoiDistrict.resx">
+      <DependentUpon>FrmPoiDistrict.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPOIDown.resx">
+      <DependentUpon>FrmPOIDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProperty.resx">
+      <DependentUpon>FrmProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRoadLineOpr.resx">
+      <DependentUpon>FrmRoadLineOpr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRoadNameUpdata.resx">
+      <DependentUpon>FrmRoadNameUpdata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTileCoverter.resx">
+      <DependentUpon>FrmTileCoverter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="FrmGoogleRectify.resx">
+      <DependentUpon>FrmGoogleRectify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCoverteRectify.resx">
+      <DependentUpon>FrmCoverteRectify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmShp2Excel.resx">
+      <DependentUpon>FrmShp2Excel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRegion2Line.resx">
+      <DependentUpon>FrmRegion2Line.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPOIDownForBaidu.resx">
+      <DependentUpon>FrmPOIDownForBaidu.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="20140910045845803_easyicon_net_32.ico" />
+    <Content Include="BUG以及修改日志.txt" />
+    <Content Include="createHTML\EzMap.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\qq.html" />
+    <Content Include="createHTML\tempBaidu.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Init.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\100_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\110_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\256.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\35_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\50_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\512.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\60_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\70_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\80_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\90_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\bl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\blank.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\br.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\close.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\close1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\closedhand.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\cloud-popup-relative.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\dis_box_01.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\drag-rectangle-off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\drag-rectangle-on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\east-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\east-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\editCircle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\iw_tail.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\layer-switcher-maximize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\layer-switcher-minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\map-clear.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\marker-blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\marker-gold.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\marker-green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\marker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\measuring-stick-off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\measuring-stick-on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\east-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\east-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\navigator.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\north-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\north-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\panGround.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\slider-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\slider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\south-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\south-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\west-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\west-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\zoom-minus-mini-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\zoom-minus-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\zoom-plus-mini-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\zoom-plus-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\zoombar-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\zoombar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\zoomworld-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\zoomworld.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\放大-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\navigator\缩小-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\north-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\north-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\north.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\openhand.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\overcontract.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\overdown1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\overdown2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\overexpand.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\overup1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\overup2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\panGround.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\panning-hand-off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\panning-hand-on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\ruler.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\slider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\south-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\south-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\ul.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\ur.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\west-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\west-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\zoom-minus-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\zoom-plus-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\zoom-world-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\zoombar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\img\zoomworld.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\theme\default\google.css" />
+    <Content Include="createHTML\Netposa\theme\default\google.tidy.css" />
+    <Content Include="createHTML\Netposa\theme\default\ie6-style.css" />
+    <Content Include="createHTML\Netposa\theme\default\ie6-style.tidy.css" />
+    <Content Include="createHTML\Netposa\theme\default\img\add_point_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\add_point_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\blank.gif" />
+    <Content Include="createHTML\Netposa\theme\default\img\close.gif" />
+    <Content Include="createHTML\Netposa\theme\default\img\closedhand.cur" />
+    <Content Include="createHTML\Netposa\theme\default\img\close_1.gif" />
+    <Content Include="createHTML\Netposa\theme\default\img\drag-rectangle-off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\drag-rectangle-on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\draw_line_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\draw_line_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\draw_point_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\draw_point_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\draw_polygon_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\draw_polygon_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\editing_tool_bar.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\move_feature_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\move_feature_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\navigation_history.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\openhand.cur" />
+    <Content Include="createHTML\Netposa\theme\default\img\overview_replacement.gif" />
+    <Content Include="createHTML\Netposa\theme\default\img\pan-panel-NOALPHA.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\pan-panel.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\panning-hand-off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\panning-hand-on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\pan_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\pan_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\popup-arrow.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\popup-close-hover.gif" />
+    <Content Include="createHTML\Netposa\theme\default\img\popup-close.gif" />
+    <Content Include="createHTML\Netposa\theme\default\img\remove_point_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\remove_point_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\ruler.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\save_features_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\save_features_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\view_next_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\view_next_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\view_previous_off.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\view_previous_on.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\zoom-panel-NOALPHA.png" />
+    <Content Include="createHTML\Netposa\theme\default\img\zoom-panel.png" />
+    <Content Include="createHTML\Netposa\theme\default\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\Netposa\theme\default\style.mobile.css" />
+    <Content Include="createHTML\Netposa\theme\default\style.mobile.tidy.css" />
+    <Content Include="createHTML\Netposa\theme\default\style.tidy.css" />
+    <Content Include="createHTML\Netposa\theme\default\style_chrome.css" />
+    <Content Include="createHTML\tempGaoDe.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\template.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\templateOSM.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\tempTD.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="createHTML\说明.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="mofang.ico" />
+    <Content Include="webmap\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Init.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\100_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\110_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\256.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\35_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\50_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\512.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\60_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\70_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\80_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\90_15.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\bl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\blank.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\br.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\close.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\close1.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\closedhand.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\cloud-popup-relative.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\dis_box_01.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\drag-rectangle-off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\drag-rectangle-on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\east-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\east-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\editCircle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\iw_tail.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\layer-switcher-maximize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\layer-switcher-minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\map-clear.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\marker-blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\marker-gold.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\marker-green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\marker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\measuring-stick-off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\measuring-stick-on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\east-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\east-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\navigator.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\north-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\north-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\panGround.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\slider-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\slider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\south-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\south-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\west-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\west-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\zoom-minus-mini-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\zoom-minus-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\zoom-plus-mini-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\zoom-plus-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\zoombar-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\zoombar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\zoomworld-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\zoomworld.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\放大-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\navigator\缩小-hover.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\north-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\north-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\north.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\openhand.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\overcontract.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\overdown1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\overdown2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\overexpand.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\overup1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\overup2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\panGround.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\panning-hand-off.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\panning-hand-on.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\ruler.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\slider.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\south-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\south-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\ul.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\ur.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\west-mini-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\west-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\zoom-minus-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\zoom-plus-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\zoom-world-mini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\zoombar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\img\zoomworld.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\theme\default\google.css" />
+    <Content Include="webmap\Netposa\theme\default\google.tidy.css" />
+    <Content Include="webmap\Netposa\theme\default\ie6-style.css" />
+    <Content Include="webmap\Netposa\theme\default\ie6-style.tidy.css" />
+    <Content Include="webmap\Netposa\theme\default\img\add_point_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\add_point_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\blank.gif" />
+    <Content Include="webmap\Netposa\theme\default\img\close.gif" />
+    <Content Include="webmap\Netposa\theme\default\img\closedhand.cur" />
+    <Content Include="webmap\Netposa\theme\default\img\close_1.gif" />
+    <Content Include="webmap\Netposa\theme\default\img\drag-rectangle-off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\drag-rectangle-on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\draw_line_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\draw_line_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\draw_point_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\draw_point_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\draw_polygon_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\draw_polygon_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\editing_tool_bar.png" />
+    <Content Include="webmap\Netposa\theme\default\img\move_feature_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\move_feature_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\navigation_history.png" />
+    <Content Include="webmap\Netposa\theme\default\img\openhand.cur" />
+    <Content Include="webmap\Netposa\theme\default\img\overview_replacement.gif" />
+    <Content Include="webmap\Netposa\theme\default\img\pan-panel-NOALPHA.png" />
+    <Content Include="webmap\Netposa\theme\default\img\pan-panel.png" />
+    <Content Include="webmap\Netposa\theme\default\img\panning-hand-off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\panning-hand-on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\pan_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\pan_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\popup-arrow.png" />
+    <Content Include="webmap\Netposa\theme\default\img\popup-close-hover.gif" />
+    <Content Include="webmap\Netposa\theme\default\img\popup-close.gif" />
+    <Content Include="webmap\Netposa\theme\default\img\remove_point_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\remove_point_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\ruler.png" />
+    <Content Include="webmap\Netposa\theme\default\img\save_features_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\save_features_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\view_next_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\view_next_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\view_previous_off.png" />
+    <Content Include="webmap\Netposa\theme\default\img\view_previous_on.png" />
+    <Content Include="webmap\Netposa\theme\default\img\zoom-panel-NOALPHA.png" />
+    <Content Include="webmap\Netposa\theme\default\img\zoom-panel.png" />
+    <Content Include="webmap\Netposa\theme\default\style.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webmap\Netposa\theme\default\style.mobile.css" />
+    <Content Include="webmap\Netposa\theme\default\style.mobile.tidy.css" />
+    <Content Include="webmap\Netposa\theme\default\style.tidy.css" />
+    <Content Include="webmap\Netposa\theme\default\style_chrome.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MapDataTools\MapDataTools.csproj">
+      <Project>{90ad4817-5bc6-46a4-b990-99d111860624}</Project>
+      <Name>MapDataTools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

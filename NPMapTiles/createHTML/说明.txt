@@ -1,0 +1,6 @@
+1.OpenLayers 文件夹 是地图样式和图片
+2.s 文件夹是谷歌离线地图图片
+3.NPMapLib.min.js 是NPMap js sdk.
+4.temp.html 是demo.
+
+直接双击temp.html 就可以运行当前地图

@@ -1,0 +1,1 @@
+E:\开发工具\NPGISMapTileDown\GetTileImage\MetroFramework.Design\obj\Release\MetroFramework.Design.csprojResolveAssemblyReference.cache

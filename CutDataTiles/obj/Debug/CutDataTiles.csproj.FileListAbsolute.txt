@@ -1,0 +1,20 @@
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\CutDataTiles.exe.config
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.MainForm.resources
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.Properties.Resources.resources
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.csproj.GenerateResource.Cache
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\CutDataTiles.exe
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\CutDataTiles.pdb
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.exe
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.pdb
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\npgsql.dll
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\mono.security.dll
+E:\开发工具\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\DevComponents.DotNetBar2.dll
+E:\GIS\develop tool\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\CutDataTiles.exe.config
+E:\GIS\develop tool\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.exe
+E:\GIS\develop tool\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.pdb
+E:\GIS\develop tool\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\CutDataTiles.exe
+E:\GIS\develop tool\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\CutDataTiles.pdb
+E:\GIS\develop tool\GetTileImageNew\GetTileImage\CutDataTiles\bin\Debug\DevComponents.DotNetBar2.dll
+E:\GIS\develop tool\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.MainForm.resources
+E:\GIS\develop tool\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.Properties.Resources.resources
+E:\GIS\develop tool\GetTileImageNew\GetTileImage\CutDataTiles\obj\Debug\CutDataTiles.csproj.GenerateResource.Cache

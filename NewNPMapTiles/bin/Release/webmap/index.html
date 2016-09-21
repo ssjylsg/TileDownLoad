@@ -1,0 +1,651 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <title>OpenLayers Tiled Map Service Example</title>
+    <script type="text/javascript" src="Init.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0"></script>
+    <script defer="defer" type="text/javascript">
+    function init() {
+        //InitBDMap();
+        //InitBDMapImage();
+        InitGGMap();
+        //InitGGMapImage();
+        //InitTDTMap();
+        //InitTDTMapImage();
+        //InitGaoDe();
+        //InitGaoDeImage();
+        //InitQQMap();
+        //InitQQMapImage();
+    }
+    var boundaryLayer;
+    var drawtool;
+
+    function getBoundary(name, type) {
+        var bdary = new BMap.Boundary();
+        bdary.get(name, function(rs) {
+            boundaryLayer.removeAllOverlays();
+            points = rs; //获取行政区域
+            var rslength = rs.boundaries.length;
+            var top = 0; //大
+            var bottom = 0; //小
+            var left = 0; //小
+            var right = 0; //大
+            var linearRing = [];
+            for (i = 0; i < rslength; i++) {
+                var triangleCoords = [];
+                var temp = rs.boundaries[i];
+                var latLngs = temp.split(";");
+                var points = [];
+                for (j = 1; j < latLngs.length - 1; j++) {
+                    var postion = latLngs[j].indexOf(",");
+                    var lng = parseFloat(latLngs[j].substr(0, postion)); //经度
+                    var lat = parseFloat(latLngs[j].substr(postion + 1)); //纬度
+                    p = new NPMapLib.Geometry.Point(lng, lat);
+                    if (type != "tiandi")
+                        p = p.transform("EPSG:4326", "EPSG:900913");
+                    if (type === "baidu") {
+                        p.lat = p.lat - (lat - 34) / 10 * 6000;
+                    }
+                    lng = p.lon;
+                    lat = p.lat;
+                    triangleCoords.push(p);
+                    //活动最大，最小经纬度。计算地图中心点
+                    if (j == 1 && top == 0 && bottom == 0 && left == 0 && right == 0) {
+                        top = lat;
+                        bottom = lat;
+                        left = lng;
+                        right = lng;
+                    } else {
+                        if (lat > top) {
+                            top = lat;
+                        }
+                        if (lat < bottom) {
+                            bottom = lat;
+                        }
+                        if (lng > right) {
+                            right = lng;
+                        }
+                        if (lng < left) {
+                            left = lng;
+                        }
+                    }
+
+                }
+                var f = new NPMapLib.Geometry.Polygon(triangleCoords);
+                boundaryLayer.addOverlay(f);
+            }
+            map.zoomToExtent({
+                left: left,
+                bottom: top,
+                right: right,
+                top: bottom
+            });
+            window.external.OnDrawComlpeted(left, bottom, right, top);
+        });
+    }
+
+    function clearOverlay() {
+        boundaryLayer.removeAllOverlays();
+    }
+
+    function pan() {
+        map.pan();
+    }
+
+    function selectZoomIn() {
+        map.zoomIn();
+    }
+
+    function setZoom(zoom) {
+        this.map.setZoom(zoom);
+    }
+
+    function getZoom() {
+        return this.map.getZoom();
+    }
+    function setCenter(point) {
+        var p = eval("(" + point + ")");
+        this.map.setCenter(new NPMapLib.Geometry.Point(p.lon,p.lat));
+    }
+    function getCenter() {
+        var c = this.map.getCenter();
+        return "{" +
+             "lon:" + c.lon +
+            ",lat:" + c.lat +
+            "}";
+    }
+
+    function selectZoomOut() {
+        map.zoomOut();
+    }
+
+    function zoomIn() {
+        map.zoomInFixed();
+    }
+
+    function zoomOut() {
+        map.zoomOutFixed();
+    }
+
+    function destroyMap() {
+        map.destroyMap();
+    }
+
+    function drawRectangle() {
+        drawtool.startUp();
+        drawtool.setMode(NPMapLib.DRAW_MODE_RECT, callBackMethod);
+    }
+
+    function drawRegion() {
+        drawtool.startUp();
+        drawtool.setMode(NPMapLib.DRAW_MODE_POLYLGON, callBackMethod);
+    }
+
+    function measureDistance() {
+        measuretool.startUp();
+        measuretool.setMode(NPMapLib.MEASURE_MODE_DISTANCE);
+    }
+
+    function measureArea() {
+        measuretool.startUp();
+        measuretool.setMode(NPMapLib.MEASURE_MODE_AREA);
+    }
+
+    function locationCity(name) {
+        if (map && (map._mapAdapter.map.baseLayer instanceof OpenLayers.Layer.TDTLayer)) {
+            this.getBoundary(name, "tiandi");
+        } else if (map && (map._mapAdapter.map.baseLayer instanceof OpenLayers.Layer.Baidu)) {
+            this.getBoundary(name, "baidu");
+        } else {
+            this.getBoundary(name);
+        }
+    }
+
+    function callBackMethod(result, geometry) {
+        geometry.isEnableEdit = true;
+        boundaryLayer.removeAllOverlays();
+        boundaryLayer.addOverlay(geometry);
+        getGeometryExtent(geometry);
+        geometry.addEventListener("dragend", getGeometryExtent);
+        geometry.enableEditing(NPMapLib.ModifyFeature_RESHAPE);
+    }
+
+    function getGeometryExtent(geometry) {
+        var points = geometry.getPath();
+        var top = 0; //大
+        var bottom = 0; //小
+        var left = 0; //小
+        var right = 0; //大
+        for (var i = 0; i < points.length; i++) {
+            var p = points[i];
+            var lat = p.lat;
+            var lng = p.lon;
+            if (i == 0 && top == 0 && bottom == 0 && left == 0 && right == 0) {
+                top = lat;
+                bottom = lat;
+                left = lng;
+                right = lng;
+            } else {
+                if (lat > top) {
+                    top = lat;
+                }
+                if (lat < bottom) {
+                    bottom = lat;
+                }
+                if (lng > right) {
+                    right = lng;
+                }
+                if (lng < left) {
+                    left = lng;
+                }
+            }
+        }
+        window.external.OnDrawComlpeted(left, bottom, right, top);
+    }
+
+    function InitBDMap() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            projection: "EPSG:900913",
+            minZoom: 5,
+            maxZoom: 19
+        });
+
+        //图层参数
+        var opts = {
+            centerPoint: [11960549.285411, 4095912.7650574],
+            origin: [0, 23000],
+            fullExtent: [-20037508.34, -20037508.34, 20037508.34, 20037508.34],
+            sateTiles: false,
+            isBaseLayer: true,
+            maxResolution: 262144,
+            numZoomLevels: 20,
+            maxZoomLevel: 20
+        };
+
+        var url = ["http://online1.map.bdimg.com/tile/?qt=tile&x=${x}&y=${y}&z=${z}&styles=pl&udt=20150410", "http://online2.map.bdimg.com/tile/?qt=tile&x=${x}&y=${y}&z=${z}&styles=pl&udt=20150410", "http://online3.map.bdimg.com/tile/?qt=tile&x=${x}&y=${y}&z=${z}&styles=pl&udt=20150410"];
+        var TDBaseLayer = new NPMapLib.Layers.BaiduTileLayer(url, "ditu", opts);
+        map.addLayer(TDBaseLayer);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        // map.addControl(new NPMapLib.Controls.OverviewControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            var newPoint = point.transform("EPSG:900913", "EPSG:4326");
+            window.external.showLonLat(newPoint.lon.toString(), newPoint.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(11960549.285411, 4095912.7650574);
+        map.setCenter(center, 5);
+    }
+
+    function InitBDMapImage() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            projection: "EPSG:900913",
+            minZoom: 5,
+            maxZoom: 19
+        });
+
+        //图层参数
+        var opts = {
+            centerPoint: [11960549.285411, 4095912.7650574],
+            origin: [0, 23000],
+            fullExtent: [-20037508.34, -20037508.34, 20037508.34, 20037508.34],
+            sateTiles: false,
+            isBaseLayer: true,
+            maxResolution: 262144,
+            numZoomLevels: 20,
+            maxZoomLevel: 20
+        };
+        var url = ["http://shangetu0.map.bdimg.com/it/u=x=${x};y=${y};z=${z};v=009;type=sate&fm=46&udt=20140929", "http://shangetu1.map.bdimg.com/it/u=x=${x};y=${y};z=${z};v=009;type=sate&fm=46&udt=20140929", "http://shangetu2.map.bdimg.com/it/u=x=${x};y=${y};z=${z};v=009;type=sate&fm=46&udt=20140929"];
+        var TDBaseLayer = new NPMapLib.Layers.BaiduTileLayer(url, "ditu", opts);
+        map.addLayer(TDBaseLayer);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        // map.addControl(new NPMapLib.Controls.OverviewControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            var newPoint = point.transform("EPSG:900913", "EPSG:4326");
+            window.external.showLonLat(newPoint.lon.toString(), newPoint.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(11960549.285411, 4095912.7650574);
+        map.setCenter(center, 5);
+    }
+
+    function InitGGMap() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            projection: "EPSG:900913",
+            maxResolution: 156543.0339,
+            units: 'm',
+            minZoom: 4,
+            maxZoom: 20
+        });
+        var m_Layer_google = new OpenLayers.Layer.OSM("google地图", "http://mt1.google.cn/vt?pb=!1m4!1m3!1i${z}!2i${x}!3i${y}!2m3!1e0!2sm!3i285000000!3m9!2szh-CN!3sCN!5e18!12m1!1e47!12m3!1e37!2m1!1ssmartmaps!4e0", {
+            numZoomLevels: 22,
+            alpha: true,
+            isBaseLayer: true,
+            visibility: false
+        });
+        map._mapAdapter.map.addLayer(m_Layer_google);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        // map.addControl(new NPMapLib.Controls.OverviewControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        //map.addControl(new NPMapLib.Controls.OverviewControl());
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            var newPoint = point.transform("EPSG:900913", "EPSG:4326");
+            window.external.showLonLat(newPoint.lon.toString(), newPoint.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(11960549.285411, 4095912.7650574);
+        map.setCenter(center, 4);
+    }
+
+    function InitGGMapImage() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            projection: "EPSG:900913",
+            maxResolution: 156543.0339,
+            units: 'm',
+            minZoom: 4,
+            maxZoom: 19
+        });
+        var opts = {
+            fullExtent: [-20037508.34, -20037508.34, 20037508.34, 20037508.34],
+            isBaseLayer: true,
+            numZoomLevels: 20,
+            alpha: true,
+            maxZoomLevel: 20
+        };
+        2
+        var s_Layer_google = new NPMapLib.Layers.GoogleMapTileLayer(["http://mt0.google.cn/vt?lyrs=s@175&hl=zh-CN&gl=CN&x=${x}&y=${y}&z=${z}", "http://mt1.google.cn/vt?lyrs=s@175&hl=zh-CN&gl=CN&x=${x}&y=${y}&z=${z}"], "google卫星", opts);
+        map.addLayer(s_Layer_google);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        //map.addControl(new NPMapLib.Controls.OverviewControl());
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            var newPoint = point.transform("EPSG:900913", "EPSG:4326");
+            window.external.showLonLat(newPoint.lon.toString(), newPoint.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(11960549.285411, 4095912.7650574);
+        map.setCenter(center, 4);
+    }
+
+    function InitTDTMap() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            minZoom: 5,
+            maxZoom: 18
+        });
+        //
+        //图层参数
+        var opts1 = {
+            mapType: 'EMap',
+            centerPoint: [116.43761367621, 39.871705835781],
+            fullExtent: [-180, -90, 180, 90],
+            topLevel: 0,
+            bottomLevel: 18,
+            isBaseLayer: true,
+            mirrorUrls: ["http://tile4.tianditu.com/DataServer", "http://tile5.tianditu.com/DataServer", "http://tile6.tianditu.com/DataServer"],
+            zoomOffset: 0
+        };
+        var opts2 = {
+            mapType: 'ESatellite',
+            centerPoint: [116.43761367621, 39.871705835781],
+            fullExtent: [-180, -90, 180, 90],
+            topLevel: 0,
+            bottomLevel: 18,
+            isBaseLayer: false,
+            mirrorUrls: ["http://tile4.tianditu.com/DataServer", "http://tile5.tianditu.com/DataServer", "http://tile6.tianditu.com/DataServer"],
+            zoomOffset: 0
+        };
+
+        var url = "http://tile1.tianditu.com/DataServer";
+        var layerSLYX = new NPMapLib.Layers.TDMapLayer(url, "ditu", opts1);
+        var layerBZ = new NPMapLib.Layers.TDMapLayer(url, "biaozhu", opts2);
+        map.addLayers([layerSLYX, layerBZ]);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        //map.addControl(new NPMapLib.Controls.OverviewControl());
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            //var newPoint = point.transform("EPSG:900913","EPSG:4326");
+            window.external.showLonLat(point.lon.toString(), point.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(108.83761367621, 34.371705835781);
+        map.setCenter(center, 4);
+    }
+
+    function InitTDTMapImage() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            minZoom: 4,
+            maxZoom: 18
+        });
+        //
+        //图层参数
+        var opts1 = {
+            mapType: 'img_c',
+            centerPoint: [116.43761367621, 39.871705835781],
+            fullExtent: [-180, -90, 180, 90],
+            topLevel: 0,
+            bottomLevel: 18,
+            isBaseLayer: true,
+            mirrorUrls: ["http://t5.tianditu.com/DataServer", "http://t2.tianditu.com/DataServer", "http://t3.tianditu.com/DataServer", "http://t4.tianditu.com/DataServer"],
+            zoomOffset: 0
+        };
+
+        var url = "http://tile2.tianditu.com/DataServer";
+        var layerSLYX = new NPMapLib.Layers.TDMapLayer(url, "ditu", opts1);
+        map.addLayers([layerSLYX]);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        //map.addControl(new NPMapLib.Controls.OverviewControl());
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            window.external.showLonLat(point.lon.toString(), point.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(116.43761367621, 39.871705835781);
+        map.setCenter(center, 4);
+    }
+
+    function InitGaoDe() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            minZoom: 4,
+            maxZoom: 18,
+            projection: "EPSG:900913",
+            restrictedExtent: [-20037508.3427892, -20037508.3427892, 20037508.3427892, 20037508.3427892]
+        });
+        //
+        //图层参数
+        var opts = {
+            centerPoint: [11628328.629245, 3957647.1667763],
+            fullExtent: [-20037508.3427892, -20037508.3427892, 20037508.3427892, 20037508.3427892],
+            isBaseLayer: true
+        };
+
+        var url = ["http://webrd01.is.autonavi.com/appmaptile??lang=zh_cn&size=1&scale=1&style=7", "http://webrd02.is.autonavi.com/appmaptile??lang=zh_cn&size=1&scale=1&style=7", "http://webrd03.is.autonavi.com/appmaptile??lang=zh_cn&size=1&scale=1&style=7", "http://webrd04.is.autonavi.com/appmaptile??lang=zh_cn&size=1&scale=1&style=7"];
+        var layerSLYX = new NPMapLib.Layers.GaoDeLayer(url, "ditu", opts);
+        map.addLayers([layerSLYX]);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        //map.addControl(new NPMapLib.Controls.OverviewControl());
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            var newPoint = point.transform("EPSG:900913", "EPSG:4326");
+            window.external.showLonLat(newPoint.lon.toString(), newPoint.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(11628328.629245, 3957647.1667763);
+        map.setCenter(center, 4);
+    }
+
+    function InitGaoDeImage() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            minZoom: 4,
+            maxZoom: 18,
+            projection: "EPSG:900913",
+            displayProjection: "EPSG:4326",
+            restrictedExtent: [-20037508.3427892, -20037508.3427892, 20037508.3427892, 20037508.3427892]
+        });
+        //
+        //图层参数
+        var opts = {
+            centerPoint: [11628328.629245, 3957647.1667763],
+            fullExtent: [-20037508.3427892, -20037508.3427892, 20037508.3427892, 20037508.3427892],
+            isBaseLayer: true
+        };
+
+        var url = ["http://webst01.is.autonavi.com/appmaptile??lang=zh_cn&size=1&scale=1&style=6", "http://webst02.is.autonavi.com/appmaptile??lang=zh_cn&size=1&scale=1&style=6", "http://webst03.is.autonavi.com/appmaptile??lang=zh_cn&size=1&scale=1&style=6", "http://webst04.is.autonavi.com/appmaptile??lang=zh_cn&size=1&scale=1&style=6"];
+        var layerSLYX = new NPMapLib.Layers.GaoDeLayer(url, "ditu", opts);
+        map.addLayers([layerSLYX]);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        //map.addControl(new NPMapLib.Controls.OverviewControl());
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            var newPoint = point.transform("EPSG:900913", "EPSG:4326");
+            window.external.showLonLat(newPoint.lon.toString(), newPoint.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(11628328.629245, 3957647.1667763);
+        map.setCenter(center, 4);
+    }
+
+    function InitQQMap() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            projection: "EPSG:900913",
+            displayProjection: "EPSG:4326",
+            minZoom: 4,
+            maxZoom: 18
+        });
+        //
+        //图层参数
+        var opts = {
+            centerPoint: [11628328.629245, 3957647.1667763],
+            fullExtent: [-20037508.3427892, -20037508.3427892, 20037508.3427892, 20037508.3427892],
+            sateTiles: false,
+            isBaseLayer: true
+        };
+
+        var url = ["http://p0.map.gtimg.com/maptilesv3/", "http://p1.map.gtimg.com/maptilesv3/", "http://p2.map.gtimg.com/maptilesv3/", "http://p3.map.gtimg.com/maptilesv3/"];
+        var layerSLYX = new NPMapLib.Layers.QQMapLayer(url, "ditu", opts);
+        map.addLayers([layerSLYX]);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        //map.addControl(new NPMapLib.Controls.OverviewControl());
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            var newPoint = point.transform("EPSG:900913", "EPSG:4326");
+            window.external.showLonLat(newPoint.lon.toString(), newPoint.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(11628328.629245, 3957647.1667763);
+        map.setCenter(center, 4);
+    }
+
+    function InitQQMapImage() {
+        var mapContainer = document.getElementById("mapID");
+        map = new NPMapLib.Map(mapContainer, {
+            projection: "EPSG:900913",
+            displayProjection: "EPSG:4326",
+            minZoom: 4,
+            maxZoom: 18
+        });
+        //
+        //图层参数
+        var opts = {
+            centerPoint: [11628328.629245, 3957647.1667763],
+            fullExtent: [-20037508.3427892, -20037508.3427892, 20037508.3427892, 20037508.3427892],
+            sateTiles: true,
+            isBaseLayer: true
+        };
+        var url = ["http://p0.map.gtimg.com/sateTiles/", "http://p1.map.gtimg.com/sateTiles/", "http://p2.map.gtimg.com/sateTiles/", "http://p3.map.gtimg.com/sateTiles/"];
+        var layerSLYX = new NPMapLib.Layers.QQMapLayer(url, "ditu", opts);
+        map.addLayers([layerSLYX]);
+        boundaryLayer = new NPMapLib.Layers.OverlayLayer("获取行政区域");
+        map.addLayer(boundaryLayer);
+        map.addControl(new NPMapLib.Controls.NavigationControl());
+        drawtool = new NPMapLib.Tools.DrawingTool(map.id);
+        //测量工具
+        measuretool = new NPMapLib.Tools.MeasureTool(map.id, {
+            lengthUnit: NPMapLib.MAP_UNITS_METERS, //长度单位
+            areaUnit: NPMapLib.MAP_UNITS_SQUARE_KILOMETERS, //面积单位
+            mode: NPMapLib.MEASURE_MODE_DISTANCE //测量模式
+        });
+        //map.addControl(new NPMapLib.Controls.OverviewControl());
+        map.addEventListener(NPMapLib.MAP_EVENT_MOUSE_MOVE, function(point, evt) {
+            var newPoint = point.transform("EPSG:900913", "EPSG:4326");
+            window.external.showLonLat(newPoint.lon.toString(), newPoint.lat.toString());
+        });
+        map.addEventListener(NPMapLib.MAP_EVENT_ZOOM_END, function(zoomlevel) {
+            window.external.showZoom(zoomlevel);
+        })
+        var center = new NPMapLib.Geometry.Point(11628328.629245, 3957647.1667763);
+        map.setCenter(center, 4);
+    }
+    </script>
+</head>
+
+<body onLoad="init()" oncontextmenu=self.event.returnValue=false onselectstart="return false">
+    <div id="mapID" style="top:0px;left:0px;width:100%;height:100%;" class="smallmap">
+    </div>
+</body>
+
+</html>

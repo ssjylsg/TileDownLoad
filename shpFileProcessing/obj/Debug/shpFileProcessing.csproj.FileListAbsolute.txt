@@ -1,0 +1,12 @@
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\bin\Debug\ShpFileProcessing.exe.config
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\bin\Debug\ShpFileProcessing.exe
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\bin\Debug\ShpFileProcessing.pdb
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\bin\Debug\ChnCharInfo.dll
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\bin\Debug\mono.security.dll
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\bin\Debug\npgsql.dll
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\obj\Debug\shpFileProcessing.csprojResolveAssemblyReference.cache
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\obj\Debug\ShpFileProcessing.FrmMain.resources
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\obj\Debug\ShpFileProcessing.Properties.Resources.resources
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\obj\Debug\shpFileProcessing.csproj.GenerateResource.Cache
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\obj\Debug\ShpFileProcessing.exe
+E:\开发工具\GetTileImageNew\GetTileImage\shpFileProcessing\obj\Debug\ShpFileProcessing.pdb

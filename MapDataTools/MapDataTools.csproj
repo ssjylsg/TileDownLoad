@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{90AD4817-5BC6-46A4-B990-99D111860624}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MapDataTools</RootNamespace>
+    <AssemblyName>MapDataTools</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aspose.Cells">
+      <HintPath>..\packages\Aspose\Aspose.Cells.dll</HintPath>
+    </Reference>
+    <Reference Include="ChnCharInfo">
+      <HintPath>..\usedll\ChnCharInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="gdal_csharp">
+      <HintPath>..\UseDll\gdal_csharp.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\usedll\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.MSScriptControl">
+      <HintPath>..\usedll\Interop.MSScriptControl.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net35-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\UseDll\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\packages\Npgsql.2.2.7\lib\net35\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="ogr_csharp">
+      <HintPath>..\UseDll\ogr_csharp.dll</HintPath>
+    </Reference>
+    <Reference Include="osr_csharp">
+      <HintPath>..\UseDll\osr_csharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminDivision\AdminDivisionDown.cs" />
+    <Compile Include="ArcMapEvent.cs" />
+    <Compile Include="Tile\BaiduImageTile.cs" />
+    <Compile Include="Tile\EZMapTile.cs" />
+    <Compile Include="Tile\LintuTile.cs" />
+    <Compile Include="Tile\OSMTile.cs" />
+    <Compile Include="Util\AsposeCellsHelper.cs" />
+    <Compile Include="MapUtil\BaiduMap.cs" />
+    <Compile Include="Tile\BaiduMapTile.cs" />
+    <Compile Include="CityConfig.cs" />
+    <Compile Include="CityRoadConfig.cs" />
+    <Compile Include="CityURLConfig.cs" />
+    <Compile Include="Util\CoordHelper.cs" />
+    <Compile Include="Util\ExcelHelper.cs" />
+    <Compile Include="MapUtil\GaodeMap.cs" />
+    <Compile Include="Tile\GaoDeMapTile.cs" />
+    <Compile Include="MapUtil\GaoDeRoads.cs" />
+    <Compile Include="MapUtil\GoogleMap.cs" />
+    <Compile Include="Tile\GoogleMapTile.cs" />
+    <Compile Include="HotCity.cs" />
+    <Compile Include="Util\HttpHelper.cs" />
+    <Compile Include="Tile\IMapTile.cs" />
+    <Compile Include="Util\Hz2Py.cs" />
+    <Compile Include="Util\JsonHelper.cs" />
+    <Compile Include="LisenceManager.cs" />
+    <Compile Include="MapbarRoadLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MapControl.Designer.cs">
+      <DependentUpon>MapControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Util\NetposaHelper.cs" />
+    <Compile Include="POIInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicTransport\TransportConfig.cs" />
+    <Compile Include="PublicTransport\TransportNamesLoad.cs" />
+    <Compile Include="PublicTransport\TrastportLineAndStopDown.cs" />
+    <Compile Include="MapUtil\QQMap.cs" />
+    <Compile Include="Tile\MapTile.cs" />
+    <Compile Include="Tile\QQMapTile.cs" />
+    <Compile Include="RoadModel.cs" />
+    <Compile Include="RoadNameLoad.cs" />
+    <Compile Include="Util\PinTu.cs" />
+    <Compile Include="Util\PinyinConvert.cs" />
+    <Compile Include="Util\PinyinDictionary.cs" />
+    <Compile Include="Util\ProviceCityPinYin.cs" />
+    <Compile Include="Util\Segmentation.cs" />
+    <Compile Include="Util\ShpFileHelper.cs" />
+    <Compile Include="Util\SVCHelper.cs" />
+    <Compile Include="SystemConfigPlugin\IPlugin.cs" />
+    <Compile Include="Tile\TiandiTile.cs" />
+    <Compile Include="TitleInfo.cs" />
+    <Compile Include="Util\DbHelper.cs" />
+    <Compile Include="Util\TextToPinyin.cs" />
+    <Compile Include="Util\TifHelper.cs" />
+    <Compile Include="Util\WorkConfig.cs" />
+    <Compile Include="Util\XMLFile.cs" />
+    <Compile Include="Util\XmlStorageHelper.cs" />
+    <Compile Include="XMLFile.cs" />
+    <Compile Include="XmlStorageHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MapControl.resx">
+      <DependentUpon>MapControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\cityConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="config\CityRoadConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="config\CityURLConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="config\mapbar.xml" />
+    <Content Include="config\mapbarCityRoadConfig.xml" />
+    <Content Include="Dictionary\Dictionary.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

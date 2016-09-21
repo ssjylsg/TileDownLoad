@@ -1,0 +1,39 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=7" />-->
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+</head>
+
+<body>
+    <div class="map-id" id="mapId"></div>
+    <script type="text/javascript" src="Init.js"></script>
+    <script type="text/javascript">
+    var mapContainer = document.getElementById("mapId");
+    var map = new NPMapLib.Map(mapContainer, {
+        minZoom: $minZoom$,
+        maxZoom: $maxZoom$,
+        projection: "EPSG:900913",
+        restrictedExtent:[$minX$, $minY$, $maxX$, $maxY$]
+    });
+    var extent = [-20037508.3427892, -20037508.3427892, 20037508.3427892, 20037508.3427892];
+    var url = '$path$';
+    var baseLayer = new NPMapLib.Layers.GaoDeLayer(url, 'Aerials', {
+        type: '$type$',
+        isBaseLayer: true,
+        tilePixels: 256,
+        isLocalMap: true,
+        fullExtent: extent,
+        projection: 'EPSG:900913',
+        centerPoint:[$centerX$,$centerY$],
+        zoomOffset: 0 //偏移量，控制从第几级开始显示地图
+    });
+    map.addLayers([baseLayer]);
+    map.addControl(new NPMapLib.Controls.NavigationControl());   
+    map.addControl(new NPMapLib.Controls.OverviewControl());  
+    </script>
+</body>
+</html>
